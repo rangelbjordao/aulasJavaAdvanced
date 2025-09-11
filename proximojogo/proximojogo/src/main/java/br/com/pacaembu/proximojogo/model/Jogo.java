@@ -18,4 +18,8 @@ public class Jogo {
     @Column(nullable = false, length = 50)
     private String mataMata;
 
+    @Column(nullable = false, length = 50)
+    private String nomeEstadio;
+
+    private Integer capacidadeEstadio;
 }
