@@ -13,6 +13,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
+      defer-datasource-initialization: true
     database-platform: org.hibernate.dialect.H2Dialect
     show-sql: true  # To show SQL queries in the console (optional)
     open-in-view: false  # Best practice to disable Open Session in View pattern

@@ -37,5 +37,4 @@ public class EstadioController {
         JogoDTO jogoSalvo = estadioService.salvarProximoJogo(jogo);
         return new ResponseEntity<>(jogoSalvo, HttpStatus.OK);
     }
-
 }
