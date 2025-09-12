@@ -24,14 +24,22 @@ public class JogoController {
     @GetMapping
     public ResponseEntity<?> proximoJogo(
             @RequestParam(value = "idEstadio", required = false) Long idEstadio) {
-        return null;
+        JogoDTO nextGame;
+        if (idEstadio != null) {
+            // Busca o próximo jogo filtrando por estádio
+            nextGame = jogoService.proximoJogoPorEstadio(idEstadio);
+        } else {
+            // Busca o próximo jogo sem filtro
+            nextGame = jogoService.proximoJogoPorEstadio(1L);
+        }
+        return new ResponseEntity<>(nextGame, HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<?> salvarProximoJogo(
-            @Valid @RequestBody JogoDTO jogo, BindingResult bindingResults){
+            @Valid @RequestBody JogoDTO jogo, BindingResult bindingResults) {
 
-        if(bindingResults.hasErrors()) {
+        if (bindingResults.hasErrors()) {
             return new ResponseEntity<>(bindingResults.getAllErrors(), HttpStatus.BAD_REQUEST);
         }
         try {
@@ -40,7 +48,5 @@ public class JogoController {
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-
     }
-
 }

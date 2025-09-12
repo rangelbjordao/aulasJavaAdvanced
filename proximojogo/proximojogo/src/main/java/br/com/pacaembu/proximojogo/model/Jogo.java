@@ -26,7 +26,10 @@ public class Jogo {
     )
     private Long id;
 
-    @Column(name="mata_mata", nullable = false, length = 50)
+    @Column(name = "mata_mata", nullable = false, length = 50)
     private String mataMata;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_estadio", nullable = false)
+    private Estadio estadio;
 }

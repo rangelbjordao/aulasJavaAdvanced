@@ -5,18 +5,12 @@ import lombok.Data;
 
 @Entity
 @Data
+@Table(name = "tb_estadio")
 public class Estadio {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "estadio_seq_gen")
-    @SequenceGenerator(
-            name = "estadio_seq_gen",
-            sequenceName = "estadio_seq",
-            allocationSize = 1
-    )
     private Long id;
-
+    @Column(name = "nome", nullable = false, length = 50)
     private String nome;
-
+    @Column(name = "capacidade", nullable = false)
     private Integer capacidade;
 }
