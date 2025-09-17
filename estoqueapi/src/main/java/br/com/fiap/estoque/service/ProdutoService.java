@@ -1,7 +1,7 @@
-package br.com.fiap.produtoapi.service;
+package br.com.fiap.estoque.service;
 
-import br.com.fiap.produtoapi.model.Produto;
-import br.com.fiap.produtoapi.repository.ProdutoRepository;
+import br.com.fiap.estoque.model.Produto;
+import br.com.fiap.estoque.repository.ProdutoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ public class ProdutoService {
         return produtoRepository.findAll();
     }
 
-    private Produto buscarPorId(Long id) {
+    public Produto buscarProdutoPorId(Long id) {
         Optional<Produto> produto = produtoRepository.findById(id);
         if (produto.isEmpty()) {
             throw new IllegalArgumentException("Produto not found");
@@ -25,19 +25,19 @@ public class ProdutoService {
         return produto.get();
     }
 
-    public Produto criarProduto(Produto produto) {
+    public Produto adicionarProduto(Produto produto) {
         return produtoRepository.save(produto);
     }
 
     public Produto atualizarProduto(Long id, Produto produtoAtualizado) {
-        Produto produto = buscarPorId(id);
+        Produto produto = buscarProdutoPorId(id);
         produto.setNome(produtoAtualizado.getNome());
         produto.setPreco(produtoAtualizado.getPreco());
         return produtoRepository.save(produto);
     }
 
     public void excluirProduto(Long id) {
-        Produto produto = buscarPorId(id);
+        Produto produto = buscarProdutoPorId(id);
         produtoRepository.delete(produto);
     }
 }

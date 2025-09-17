@@ -1,13 +1,13 @@
-package br.com.fiap.produtoapi;
+package br.com.fiap.estoque;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ProdutoApiApplication {
+public class EstoqueApiApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ProdutoApiApplication.class, args);
+		SpringApplication.run(EstoqueApiApplication.class, args);
 	}
 
 }

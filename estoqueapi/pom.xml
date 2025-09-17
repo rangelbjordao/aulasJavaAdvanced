@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.com.fiap</groupId>
-	<artifactId>produtoapi</artifactId>
+	<artifactId>estoqueapi</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Produto API</name>
-	<description>API Rest para gerenciamento de produtos</description>
+	<name>Estoque API</name>
+	<description>API Rest para gerenciamento de estoque de produtos</description>
 	<url/>
 	<licenses>
 		<license/>

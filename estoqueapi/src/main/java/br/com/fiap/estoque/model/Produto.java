@@ -1,4 +1,4 @@
-package br.com.fiap.produtoapi.model;
+package br.com.fiap.estoque.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
