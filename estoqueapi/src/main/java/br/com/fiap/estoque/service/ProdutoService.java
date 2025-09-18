@@ -1,43 +1,60 @@
 package br.com.fiap.estoque.service;
 
+import br.com.fiap.estoque.dto.ProdutoDTO;
 import br.com.fiap.estoque.model.Produto;
 import br.com.fiap.estoque.repository.ProdutoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
 public class ProdutoService {
+
     private ProdutoRepository produtoRepository;
 
-    public List<Produto> listarProdutos() {
-        return produtoRepository.findAll();
+    public List<ProdutoDTO> listarProdutos() {
+        return produtoRepository.findAll()
+                .stream()
+                .map(this::toDTO)
+                .toList();
     }
 
-    public Produto buscarProdutoPorId(Long id) {
-        Optional<Produto> produto = produtoRepository.findById(id);
-        if (produto.isEmpty()) {
-            throw new IllegalArgumentException("Produto not found");
-        }
-        return produto.get();
+    public ProdutoDTO buscarProdutoPorId(Long id) {
+        Produto produto = produtoRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado"));
+        return toDTO(produto);
     }
 
-    public Produto adicionarProduto(Produto produto) {
-        return produtoRepository.save(produto);
+    public ProdutoDTO adicionarProduto(ProdutoDTO produtoDTO) {
+        Produto produto = new Produto();
+        produto.setNome(produtoDTO.getNome());
+        produto.setPreco(produtoDTO.getPreco());
+        Produto salvo = produtoRepository.save(produto);
+        return toDTO(salvo);
     }
 
-    public Produto atualizarProduto(Long id, Produto produtoAtualizado) {
-        Produto produto = buscarProdutoPorId(id);
-        produto.setNome(produtoAtualizado.getNome());
-        produto.setPreco(produtoAtualizado.getPreco());
-        return produtoRepository.save(produto);
+    public ProdutoDTO atualizarProduto(Long id, ProdutoDTO produtoDTO) {
+        Produto produto = produtoRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado"));
+        produto.setNome(produtoDTO.getNome());
+        produto.setPreco(produtoDTO.getPreco());
+        Produto atualizado = produtoRepository.save(produto);
+        return toDTO(atualizado);
     }
 
     public void excluirProduto(Long id) {
-        Produto produto = buscarProdutoPorId(id);
+        Produto produto = produtoRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado"));
         produtoRepository.delete(produto);
+    }
+
+    private ProdutoDTO toDTO(Produto produto) {
+        ProdutoDTO produtoDTO = new ProdutoDTO();
+        produtoDTO.setId(produto.getId());
+        produtoDTO.setNome(produto.getNome());
+        produtoDTO.setPreco(produto.getPreco());
+        return produtoDTO;
     }
 }
