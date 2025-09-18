@@ -13,7 +13,6 @@ public class Mappings {
         entity.setMataMata(dto.getMataMata());
         return entity;
     }
-
     static JogoDTO toJogoDTO(Jogo jogo) {
         JogoDTO dto = new JogoDTO();
         dto.setId(jogo.getId());
@@ -29,4 +28,5 @@ public class Mappings {
         estadioDTO.setCapacidade(estadio.getCapacidade());
         return estadioDTO;
     }
+
 }

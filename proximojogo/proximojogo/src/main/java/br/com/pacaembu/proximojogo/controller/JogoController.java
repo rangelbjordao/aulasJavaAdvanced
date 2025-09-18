@@ -1,18 +1,16 @@
 package br.com.pacaembu.proximojogo.controller;
 
-import br.com.pacaembu.proximojogo.service.JogoService;
+import br.com.pacaembu.proximojogo.dto.ComentarioDTO;
 import br.com.pacaembu.proximojogo.dto.JogoDTO;
+import br.com.pacaembu.proximojogo.service.ComentarioService;
+import br.com.pacaembu.proximojogo.service.JogoService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/proximojogo")
@@ -20,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class JogoController {
 
     private JogoService jogoService;
+    private ComentarioService comentarioService;
 
     @GetMapping
     public ResponseEntity<?> proximoJogo(
@@ -29,8 +28,7 @@ public class JogoController {
             // Busca o próximo jogo filtrando por estádio
             nextGame = jogoService.proximoJogoPorEstadio(idEstadio);
         } else {
-            // Busca o próximo jogo sem filtro
-            nextGame = jogoService.proximoJogoPorEstadio(1L);
+            return ResponseEntity.notFound().build();
         }
         return new ResponseEntity<>(nextGame, HttpStatus.OK);
     }
@@ -48,5 +46,25 @@ public class JogoController {
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @PostMapping("/{id}/comentarios")
+    public ResponseEntity<?> adicionarComentarios(
+            @PathVariable() Long jogoId,
+            @RequestBody
+            @Valid
+            ComentarioDTO comentarioDTO, BindingResult bindingResults) {
+        if (bindingResults.hasErrors()) {
+            return new ResponseEntity<>(bindingResults.getAllErrors(), HttpStatus.BAD_REQUEST);
+        }
+
+        JogoDTO jogoDTO = jogoService.findById(jogoId);
+
+        JogoDTO.getComentarios().add(comentarioDTO);
+
+        jogoService.atualizar(jogoDTO);
+
+        ComentarioDTO comentarioDTOsalvo = comentarioService.salvarComentario(comentarioDTO);
+        return new ResponseEntity<>(comentarioDTOsalvo, HttpStatus.OK);
     }
 }
