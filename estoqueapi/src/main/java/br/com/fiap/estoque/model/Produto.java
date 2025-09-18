@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @Table(name = "tb_produto")
 public class Produto {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "nome", nullable = false, length = 50)
@@ -24,6 +25,8 @@ public class Produto {
 
     @PrePersist
     public void prePersist() {
-        this.dataCadastro = LocalDateTime.now();
+        if (dataCadastro == null) {
+            dataCadastro = LocalDateTime.now();
+        }
     }
 }

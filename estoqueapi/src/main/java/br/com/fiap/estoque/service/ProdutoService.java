@@ -4,7 +4,9 @@ import br.com.fiap.estoque.dto.ProdutoDTO;
 import br.com.fiap.estoque.model.Produto;
 import br.com.fiap.estoque.repository.ProdutoRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -13,6 +15,14 @@ import java.util.List;
 public class ProdutoService {
 
     private ProdutoRepository produtoRepository;
+
+    private ProdutoDTO toDTO(Produto produto) {
+        ProdutoDTO produtoDTO = new ProdutoDTO();
+        produtoDTO.setId(produto.getId());
+        produtoDTO.setNome(produto.getNome());
+        produtoDTO.setPreco(produto.getPreco());
+        return produtoDTO;
+    }
 
     public List<ProdutoDTO> listarProdutos() {
         return produtoRepository.findAll()
@@ -23,7 +33,7 @@ public class ProdutoService {
 
     public ProdutoDTO buscarProdutoPorId(Long id) {
         Produto produto = produtoRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado"));
         return toDTO(produto);
     }
 
@@ -37,7 +47,7 @@ public class ProdutoService {
 
     public ProdutoDTO atualizarProduto(Long id, ProdutoDTO produtoDTO) {
         Produto produto = produtoRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado"));
         produto.setNome(produtoDTO.getNome());
         produto.setPreco(produtoDTO.getPreco());
         Produto atualizado = produtoRepository.save(produto);
@@ -46,15 +56,7 @@ public class ProdutoService {
 
     public void excluirProduto(Long id) {
         Produto produto = produtoRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado"));
         produtoRepository.delete(produto);
-    }
-
-    private ProdutoDTO toDTO(Produto produto) {
-        ProdutoDTO produtoDTO = new ProdutoDTO();
-        produtoDTO.setId(produto.getId());
-        produtoDTO.setNome(produto.getNome());
-        produtoDTO.setPreco(produto.getPreco());
-        return produtoDTO;
     }
 }

@@ -1,0 +1,82 @@
+@baseUrl = http://localhost:8080
+
+### 1️⃣ Listar produtos iniciais (do data.sql, IDs 1 a 5)
+GET {{baseUrl}}/produtos
+
+### 2️⃣ Adicionar produto 1 (Notebook)
+POST {{baseUrl}}/produtos
+Content-Type: application/json
+
+{
+  "nome": "Notebook",
+  "preco": 4500.00
+}
+
+### 3️⃣ Adicionar produto 2 (Smartphone)
+POST {{baseUrl}}/produtos
+Content-Type: application/json
+
+{
+  "nome": "Smartphone",
+  "preco": 2500.00
+}
+
+### 4️⃣ Listar todos os produtos (deve retornar produtos do data.sql + 6 e 7)
+GET {{baseUrl}}/produtos
+
+### 5️⃣ Buscar produto por ID (Notebook, ID 6)
+GET {{baseUrl}}/produtos/6
+
+### 6️⃣ Buscar produto por ID (Smartphone, ID 7)
+GET {{baseUrl}}/produtos/7
+
+### 7️⃣ Atualizar produto 6 (Notebook -> Notebook Gamer)
+PUT {{baseUrl}}/produtos/6
+Content-Type: application/json
+
+{
+  "nome": "Notebook Gamer",
+  "preco": 5000.00
+}
+
+### 8️⃣ Buscar produto 6 atualizado para conferir
+GET {{baseUrl}}/produtos/6
+
+### 9️⃣ Remover produto 7 (Smartphone)
+DELETE {{baseUrl}}/produtos/7
+
+### 🔟 Listar produtos novamente (deve conter apenas produto 6 + produtos do data.sql)
+GET {{baseUrl}}/produtos
+
+### 1️⃣1️⃣ Teste de erro: buscar produto inexistente
+GET {{baseUrl}}/produtos/999
+
+### 1️⃣2️⃣ Teste de erro: atualizar produto inexistente
+PUT {{baseUrl}}/produtos/999
+Content-Type: application/json
+
+{
+  "nome": "Produto Fantasma",
+  "preco": 1000.00
+}
+
+### 1️⃣3️⃣ Teste de erro: remover produto inexistente
+DELETE {{baseUrl}}/produtos/999
+
+### 1️⃣4️⃣ Teste de validação: adicionar produto sem nome
+POST {{baseUrl}}/produtos
+Content-Type: application/json
+
+{
+  "nome": "",
+  "preco": 1500.00
+}
+
+### 1️⃣5️⃣ Teste de validação: adicionar produto sem preço
+POST {{baseUrl}}/produtos
+Content-Type: application/json
+
+{
+  "nome": "Produto Sem Preço",
+  "preco": null
+}
