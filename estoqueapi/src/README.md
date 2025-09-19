@@ -1,3 +1,11 @@
+# Integrantes
+
+Rangel Bernardi Jordão - RM560547
+
+Eduardo Osterloh Bindo - RM559755
+
+Lucas José Lima - RM561160
+
 # Estoque API
 
 API REST para gerenciamento de estoque de produtos, desenvolvida com **Spring Boot** e **H2 Database**.
