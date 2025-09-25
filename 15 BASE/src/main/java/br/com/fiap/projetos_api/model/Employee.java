@@ -1,11 +1,6 @@
 package br.com.fiap.projetos_api.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.ToString;
 
@@ -28,4 +23,7 @@ public class Employee {
     @Column(name = "age", length = 100, nullable = false)
     private int age;
 
+    @OneToOne
+    @JoinColumn(name = "entry_tag_id")
+    private EntryTag entryTag;
 }
