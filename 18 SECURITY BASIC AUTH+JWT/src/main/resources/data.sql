@@ -1,0 +1,1 @@
+INSERT INTO TB_USUARIO(nome_completo, email, senha) VALUES ('Jose da Silva', 'jose@email.com', '$2y$10$yLbpyMvBeVQe.dZ3fZla.et/pnZ3B51PwCrSkiJIsVQrEIKnC1mUm')
