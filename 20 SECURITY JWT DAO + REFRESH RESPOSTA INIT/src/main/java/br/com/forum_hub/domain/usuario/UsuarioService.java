@@ -19,4 +19,9 @@ public class UsuarioService implements UserDetailsService {
         return usuarioRepository.findByEmailIgnoreCase(username)
                 .orElseThrow(() -> new UsernameNotFoundException("O usuário não foi encontrado!"));
     }
+
+    public Usuario findById(Long idUsuario) {
+
+        return null;
+    }
 }

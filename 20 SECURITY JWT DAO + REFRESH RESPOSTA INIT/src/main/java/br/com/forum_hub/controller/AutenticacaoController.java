@@ -4,7 +4,9 @@ import br.com.forum_hub.domain.autenticacao.DadosLogin;
 import br.com.forum_hub.domain.autenticacao.TokenService;
 import br.com.forum_hub.domain.usuario.Usuario;
 import br.com.forum_hub.domain.usuario.UsuarioRepository;
+import br.com.forum_hub.domain.usuario.UsuarioService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,25 +23,56 @@ public class AutenticacaoController {
     private final TokenService tokenService;
     private final UsuarioRepository usuarioRepository;
 
-    public AutenticacaoController(AuthenticationManager authenticationManager, TokenService tokenService, UsuarioRepository usuarioRepository) {
+    private final UsuarioService usuarioService;
+
+    public AutenticacaoController(AuthenticationManager authenticationManager, TokenService tokenService, UsuarioRepository usuarioRepository, UsuarioService usuarioService) {
         this.authenticationManager = authenticationManager;
         this.tokenService = tokenService;
         this.usuarioRepository = usuarioRepository;
+        this.usuarioService = usuarioService;
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> efetuarLogin(@Valid @RequestBody DadosLogin dados){
+    public ResponseEntity<DadosToken> efetuarLogin(@Valid @RequestBody DadosLogin dados) {
         var autenticationToken = new UsernamePasswordAuthenticationToken(dados.email(), dados.password());
         var authentication = authenticationManager.authenticate(autenticationToken);
 
-        String tokenAcesso = tokenService.gerarToken((Usuario) authentication.getPrincipal());
+        return getDadosTokenResponseEntity(authentication);
+    }
 
-        return ResponseEntity.ok(tokenAcesso);
+    private ResponseEntity<DadosToken> getDadosTokenResponseEntity(Authentication authentication) {
+        String tokenAcesso = tokenService.gerarToken((Usuario) authentication.getPrincipal());
+        String refreshToken = tokenService.gerarRefreshToken((Usuario) authentication.getPrincipal());
+
+        return ResponseEntity.ok(new DadosToken(tokenAcesso, refreshToken));
+    }
+
+    @PostMapping("/atualizar-token")
+    public ResponseEntity<DadosToken> atualizarToken(@Valid
+                                                     @RequestBody DadosRefreshToken dados) {
+        var refreshToken = dados.refreshToken();
+        Long idUsuario = Long.valueOf(tokenService.verificarToken(refreshToken));
+
+        Usuario usuario = usuarioRepository.findById(idUsuario).orElseThrow();
+
+        String tokenAcesso = tokenService.gerarToken(usuario);
+        String tokenAtualizacao = tokenService.gerarRefreshToken(usuario);
+
+        return ResponseEntity.ok(new DadosToken(tokenAcesso, tokenAtualizacao));
+    }
+
+    public record DadosRefreshToken(@NotBlank String tokenRefresh) {
+        public String refreshToken() {
+            return "";
+        }
+    }
+
+    public record DadosToken(String tokenAcesso, String refreshToken) {
     }
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterDTO registerDTO) {
-        if (usuarioRepository.findByEmailIgnoreCase(registerDTO.email).isPresent()){
+        if (usuarioRepository.findByEmailIgnoreCase(registerDTO.email).isPresent()) {
             return ResponseEntity.badRequest().build();
         }
         String senhaCriptografada = new BCryptPasswordEncoder().encode(registerDTO.password);
@@ -54,6 +87,7 @@ public class AutenticacaoController {
         return usuarioRepository.save(usuario);
     }
 
-    public record RegisterDTO(String email, String password) {}
+    public record RegisterDTO(String email, String password) {
+    }
 
 }

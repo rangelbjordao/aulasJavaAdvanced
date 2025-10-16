@@ -39,7 +39,7 @@ public class ConfiguracoesSeguranca {
     }
 
     @Bean
-    public PasswordEncoder encriptador(){
+    public PasswordEncoder encriptador() {
         return new BCryptPasswordEncoder();
     }
 
