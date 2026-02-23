@@ -1,4 +1,5 @@
 import { Component, input } from '@angular/core';
+import { Movie } from '../models/movie.model';
 
 @Component({
   selector: 'app-card-movie',
@@ -7,7 +8,5 @@ import { Component, input } from '@angular/core';
   styleUrl: './card-movie.css',
 })
 export class CardMovie {
-  postUrl = input<string>();
-  title = input<string>();
-  rating = input<string>();
+  movie = input.required<Movie>();
 }

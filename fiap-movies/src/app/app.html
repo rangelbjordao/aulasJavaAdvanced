@@ -3,13 +3,9 @@
 <session-title>Em Cartaz</session-title>
 
 <div class="flex gap-2 flex-wrap">
-  <app-card-movie
-    title="Titanic"
-    rating="9.8"
-    postUrl="https://image.tmdb.org/t/p/original/As0zX43h3w6kD2NS4uVHu9HKdEh.jpg"
-  />
-  <app-card-movie />
-  <app-card-movie />
+  @for (movie of movies; track movie.id) {
+    <app-card-movie [movie]="movie" />
+  }
 </div>
 
 <session-title>Próximos Lançamentos</session-title>
