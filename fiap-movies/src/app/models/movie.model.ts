@@ -5,3 +5,9 @@ export interface Movie {
   rating: number;
   posterUrl: string;
 }
+
+export interface MovieResponse {
+  _embedded: {
+    movies: Movie[];
+  };
+}

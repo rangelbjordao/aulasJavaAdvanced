@@ -1,0 +1,5 @@
+<div class="flex gap-2 flex-wrap">
+  @for (movie of movies(); track movie.id) {
+    <app-card-movie [movie]="movie" />
+  }
+</div>
