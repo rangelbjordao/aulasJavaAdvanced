@@ -1,0 +1,5 @@
+<div class="flex gap-2 flex-wrap">
+  @for (power of powers(); track power.id) {
+    <app-card-power [power]="power" />
+  }
+</div>
