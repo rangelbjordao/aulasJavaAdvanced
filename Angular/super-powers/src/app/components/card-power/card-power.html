@@ -1,0 +1,16 @@
+<div class="flex flex-col bg-slate-600 rounded-lg w-72 p-4 shadow-md">
+  <h2 class="text-lg font-bold text-slate-100 mb-2">
+    {{ power().nome }}
+  </h2>
+
+  <p class="text-slate-100 mb-4 border-t border-slate-400 pt-2">
+    {{ power().descricao }}
+  </p>
+
+  <div class="pt-2 border-t border-slate-400">
+    <span class="text-sm font-semibold text-slate-100"> Nível de inutilidade: </span>
+    <span class="font-bold text-slate-50 ml-1">
+      {{ power().nivelInutilidade }}
+    </span>
+  </div>
+</div>

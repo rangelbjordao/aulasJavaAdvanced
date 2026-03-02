@@ -1,0 +1,12 @@
+<h1 class="text-4xl font-bold">Weather Planner</h1>
+<h2 class="text-lg">Plan your day with confidence</h2>
+
+<section>
+  <card text="Ver as estrelas" icon="moonStar" (cardClick)="handleCardClick($event)" />
+  <card text="Voar de balao" icon="balloon" (cardClick)="handleCardClick($event)" />
+  <card text="Ir a praia" icon="treePalm" (cardClick)="handleCardClick($event)" />
+</section>
+
+<div class="border-2 border-slate-400 p-2 rounded-b-lg mt-6"></div>
+
+<router-outlet></router-outlet>
