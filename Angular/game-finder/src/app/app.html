@@ -1,9 +1,14 @@
 <h1 class="text-4xl font-bold text-center">Game Finder</h1>
 
 <section class="flex flex-wrap gap-6 px-6 mt-6 justify-center">
-  <game-card [nome]="'Need for Speed'" [score]="3" />
-  <game-card [nome]="'Cyberpunk'" [score]="2" />
-  <game-card [nome]="'Gollum'" [score]="1" />
+  <game-card
+    *ngFor="let slug of ['need-for-speed', 'cyberpunk', 'gollum']"
+    [nome]="slug"
+    [score]="recommendation()?.score ?? 0"
+    [texto]="recommendation()?.texto ?? ''"
+    (click)="buscar(slug)"
+  >
+  </game-card>
 </section>
 
 <router-outlet></router-outlet>
