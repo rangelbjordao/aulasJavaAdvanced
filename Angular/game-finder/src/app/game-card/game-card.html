@@ -1,0 +1,14 @@
+<div class="p-6 border rounded-2xl bg-slate-200 w-64 cursor-pointer hover:shadow-lg transition-all duration-200"
+     (click)="nome() && $event.preventDefault()">
+  <h3 class="text-lg font-bold text-center">
+    {{ nome() }}
+  </h3>
+
+  <p class="text-xl mt-2 text-center font-medium">
+    Score: {{ score() }}/3
+  </p>
+
+  <p class="text-center mt-2 font-semibold text-slate-700">
+    {{ textoDisplay() }}
+  </p>
+</div>
