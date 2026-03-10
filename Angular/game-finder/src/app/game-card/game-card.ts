@@ -6,11 +6,12 @@ import { Component, computed, input } from '@angular/core';
   templateUrl: './game-card.html',
 })
 export class GameCard {
-  nome = input.required<string>();
-  score = input.required<number>();
-  texto = input.required<string>();
+  gameName = input.required<string>();
+  recommendation = input.required<string>();
+  stars = input.required<string>();
+  explanation = input.required<string>();
 
-  textoDisplay = computed(() => {
-    return this.texto();
+  tituloFormatado = computed(() => {
+    return `Análise de: ${this.gameName().toUpperCase()}`;
   });
 }

@@ -7,5 +7,5 @@ public class RawgResponseDTO {
     private String name;
     private Double rating;
     private Integer ratings_count;
-    private String released; // Vem como "yyyy-MM-dd"
+    private String released;
 }

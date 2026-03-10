@@ -7,7 +7,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class RecommendationDTO {
     private String gameName;
-    private String recommendation; // "Altamente Recomendado", etc.
-    private String stars;          // "⭐⭐⭐"
-    private String explanation;    // Texto justificando a nota
+    private String recommendation;
+    private String stars;
+    private String explanation;
 }
