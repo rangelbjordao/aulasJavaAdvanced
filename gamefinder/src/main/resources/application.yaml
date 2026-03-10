@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: gamefinder
+
+rawg:
+  api:
+    key: 189e75f8983b40f3b50025695e112d72
+    url: https://api.rawg.io/api/games
