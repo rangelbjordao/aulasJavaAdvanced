@@ -1,0 +1,15 @@
+### GET get all todos
+GET http://localhost:8080/todos
+
+### POST create a new todo
+POST http://localhost:8080/todos
+Content-Type: application/json
+
+{
+  "description": "Estudar Python",
+  "completed": false
+}
+
+### PUT mark a todo as completed
+PUT http://localhost:8080/todos/1
+Content-Type: application/json
