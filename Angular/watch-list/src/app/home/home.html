@@ -1,0 +1,11 @@
+<h2 class="text-3xl font-bold">Lista de Filmes</h2>
+
+@for (movie of movies(); track movie.id){
+  <app-movie-item
+    [id]="movie.id"
+    [title]="movie.title"
+    [platform]="movie.platform"
+    [watched]="movie.watched"
+  />
+}
+
