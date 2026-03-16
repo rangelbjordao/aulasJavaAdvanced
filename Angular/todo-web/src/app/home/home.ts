@@ -1,23 +1,16 @@
-import { HttpClient } from "@angular/common/http";
-import { inject, Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { Component, inject } from '@angular/core';
+import { TodoItem } from "../components/todo-item/todo-item";
+import { ApiService } from '../service/api.service';
+import { toSignal } from '@angular/core/rxjs-interop';
 
-export interface Todo {
-  id: number;
-  description: string;
-  completed: boolean;
-}
+@Component({
+  selector: 'app-home',
+  imports: [TodoItem],
+  templateUrl: './home.html',
+  styleUrl: './home.css',
+})
+export class Home {
+  private service = inject(ApiService);
 
-@Injectable({providedIn: 'root'})
-export class ApiService{
-  private http = inject(HttpClient);
-  private baseUrl = 'http://localhost:8080/todos';
-
-  getTodos(): Observable<Todo[]>   {
-    return this.http.get<Todo[]>(this.baseUrl)
-  }
-
-  //postTodo(todo: Todo): Observable<Todo> {
-    // para próxima aula
-  //}
+  todos = toSignal(this.service.getTodos());
 }

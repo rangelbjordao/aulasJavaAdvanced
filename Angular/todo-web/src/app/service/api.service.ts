@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { HttpClient } from "@angular/common/http";
+import { inject, Injectable } from "@angular/core";
+import { Observable } from "rxjs";
 
 export interface Todo {
   id: number;
@@ -8,12 +8,16 @@ export interface Todo {
   completed: boolean;
 }
 
-@Injectable({ providedIn: 'root' })
-export class ApiService {
+@Injectable({providedIn: 'root'})
+export class ApiService{
   private http = inject(HttpClient);
   private baseUrl = 'http://localhost:8080/todos';
 
-  getTodos(): Observable<Todo[]> {
-    return this.http.get<Todo[]>(this.baseUrl);
+  getTodos(): Observable<Todo[]>   {
+    return this.http.get<Todo[]>(this.baseUrl)
   }
+
+  //postTodo(todo: Todo): Observable<Todo> {
+    // para próxima aula
+  //}
 }
