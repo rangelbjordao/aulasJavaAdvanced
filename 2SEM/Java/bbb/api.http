@@ -1,0 +1,10 @@
+### POST Vote
+POST http://localhost:8080/votes
+Content-Type: application/json
+
+{
+    "participantId": "MILENA"
+}
+
+### GET Votes Report
+GET http://localhost:8081/reports

@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: vote-aggregate
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: bbb
+    password: bbb
+
+server:
+  port: 8081
